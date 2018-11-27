@@ -6,6 +6,7 @@ import member from './components/tabbar/member.vue';
 import shopcar from './components/tabbar/shopcar.vue';
 import search from './components/tabbar/search.vue';
 import newslist from './components/news/newslist.vue';
+import newsdetail from './components/news/newsdetail.vue';
 
 var router=new VueRouter({//定义路由匹配
     routes:[
@@ -14,7 +15,8 @@ var router=new VueRouter({//定义路由匹配
         {path:"/member",component:member},
         {path:"/shopcar",component:shopcar},
         {path:"/search",component:search},
-        {path:"/home/newslist",component:newslist}
+        {path:"/home/newslist",component:newslist},
+        {path:"/home/newsdetail/:id",component:newsdetail}
     ],
     'linkActiveClass':'mui-active'//修改路由匹配到的默认类，修改为mui的类
 });
