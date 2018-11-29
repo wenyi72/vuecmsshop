@@ -9,6 +9,10 @@ Vue.http.options.root="http://127.0.0.1:3000/";
 import VueRouter from 'vue-router';//引入vue-router路由
 Vue.use(VueRouter);//安装到vue身上去
 
+import { Tab, Tabs } from 'vant';//引入vant标签页组件
+import 'vant/lib/index.css';
+Vue.use(Tab).use(Tabs);
+
 import moment from 'moment';
 Vue.filter('dateFormat',function(dateStr,pattern="YYYY-MM-DD HH:mm:ss"){
     return moment(dateStr).format(pattern);
@@ -20,10 +24,11 @@ import {Header,Button} from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.component(Header.name,Header);
 
-import { Swipe, SwipeItem } from 'mint-ui';//轮播图
+import { Swipe, SwipeItem, Lazyload } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
+Vue.use(Lazyload);//懒加载组件
 
 import './lib/mui/css/mui.min.css';//css组件
 
