@@ -34,10 +34,13 @@ import './lib/mui/css/mui.min.css';//css组件
 
 import './lib/mui/css/icons-extra.css';//文字组件
 
+import VuePreview from 'vue-preview';//引入图片预览组件
+Vue.use(VuePreview);
+
 import app from './app.vue'//app.vue根组件
 new Vue({
     el:"#app",
-    return:c=>c(app),
+    //return:c=>c(app),
     render:function(c){
     return c(app);
     },

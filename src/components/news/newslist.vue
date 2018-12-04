@@ -48,9 +48,8 @@
         .mui-ellipsis{
             color: blue;
             font-size: 12px;
-        }
-        .click{
-            float: right;
+            display: flex;
+            justify-content: space-between;
         }
     }
 </style>

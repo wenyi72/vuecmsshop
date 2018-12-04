@@ -6,9 +6,9 @@
             <span class="click">点击{{photoInfo.click}}次</span>
         </p>
         <hr>
-        <div class="images">
-            <img src="http://phvbk3pna.bkt.clouddn.com/xibanya.jpg" alt="">
-        </div>
+
+        <vue-preview :slides="images"></vue-preview>
+
         <div class="content" v-html="photoInfo.content">
             
         </div>
@@ -22,17 +22,33 @@ import comment from '../common/comment.vue'
         data(){
             return {
                 id:this.$route.params.id,//设置id属性，保存当前图片的id
-                photoInfo:{}//存储当前图片的详情数据
+                photoInfo:{},//存储当前图片的详情数据
+                images:[]//存储所有的缩略图
             }
         },
         created() {
-            this.getImgInfo();
+            this.getImgInfo();//初始化图片的详情数据
+            this.getThumbImages();//加载图片的缩略图
         },
         methods:{
             getImgInfo(){
                 this.$http.get('api/getimageInfo/'+this.id).then(function(res){
                     if(res.body.status==0){
                         this.photoInfo=res.body.message[0];
+                    }
+                });
+            },
+            getThumbImages(){//获取图片缩略图
+                this.$http.get('api/getthumbimages/'+this.id).then(function(res){
+                    console.log(res.body.message);
+                    if(res.body.status==0){
+                        res.body.message.forEach(ele=>{
+                            console.log(ele);
+                            ele.msrc=ele.src;
+                            ele.w=600;
+                            ele.h=400;
+                        });
+                        this.images=res.body.message;
                     }
                 });
             }

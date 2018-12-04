@@ -1,10 +1,6 @@
 <template>
     <div class="home-container">
-        <mt-swipe :auto="2000">
-            <mt-swipe-item v-for="item in lunbo" :key="item.url">
-                <img :src="item.img" alt="">
-            </mt-swipe-item>
-        </mt-swipe>
+        <swipe :lunbo="lunbo"></swipe>
         <ul class="mui-table-view mui-grid-view mui-grid-9">
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
                 <router-link to="/home/newslist">
@@ -19,7 +15,7 @@
                 </router-link>
             </li>
             <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-                <router-link to="/home/newslist">
+                <router-link to="/home/goodslist">
                     <img src="../../images/menu3.png" alt="">
                     <div class="mui-media-body">商品购买</div>
                 </router-link>
@@ -47,6 +43,7 @@
 </template>
 
 <script>
+import swipe from "../common/swipe.vue";
     export default{
         data(){
             return{
@@ -65,20 +62,15 @@
                     }
                 });
             }
+        },
+        components:{
+            swipe
         }
     }
 </script>
 
 <style lang='scss' scoped>
     .home-container{
-        .mint-swipe{
-            height: 200px;
-            img{
-                width: 100%;
-                height: 100%;
-            }
-        }
-
         .mui-grid-9{
             background-color: #fff;
             .mui-table-view-cell{
