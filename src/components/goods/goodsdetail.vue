@@ -49,8 +49,8 @@
 			</div>
 		</div>
 		<div class="mui-card-footer btn">
-			<mt-button type="primary" size="large" class="text" >图文介绍</mt-button>
-			<mt-button type="danger" size="large">商品评论</mt-button>
+			<mt-button type="primary" plain size="large" class="text" @click="getGoodsDesc">图文介绍</mt-button>
+			<mt-button type="danger" plain size="large">商品评论</mt-button>
 		</div>
     </div>
 </template>
@@ -101,10 +101,10 @@ import mui from "../../lib/mui/js/mui.js";
 							this.goodsInfo=res.body.message[0];
 						}
 					});
-				}
-				/*getGoodsDesc(){
+				},
+				getGoodsDesc(){
 					this.$router.push('/home/goodsdesc/'+this.id);
-				}*/
+				}
 			}
     }
 </script>

@@ -55,6 +55,7 @@ import { Toast } from 'mint-ui';//引入弹框提示组件
                         //this.comments.push({add_time:Date.now(),content:this.content});//把当前的评论数据放在数组的末端
                         this.content='';//清空评论的信息
                         this.comments=[];//清空数据
+                        this.pageindex=1;//把页码重置为1
                         this.getComments();//重新加载最新的评论信息
                     }
                 });

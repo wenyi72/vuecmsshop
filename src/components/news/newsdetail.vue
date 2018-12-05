@@ -48,7 +48,6 @@ import comment from '../common/comment.vue'
             color: black;
             text-align: center;
             padding: 10px 0;
-            float: left
         }
 
         .subtitle{
@@ -58,5 +57,8 @@ import comment from '../common/comment.vue'
                 float: right
             }
         }
+    }
+    .detail-container /deep/ img{
+        width: 100%;
     }
 </style>
