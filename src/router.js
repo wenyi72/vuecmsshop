@@ -12,6 +12,7 @@ import photodetail from './components/photo/photodetail.vue';
 import goodslist from './components/goods/goodslist.vue';
 import goodsdetail from './components/goods/goodsdetail.vue';
 import goodsdesc from './components/goods/goodsdesc.vue';
+import goodscomment from './components/goods/goodscomment.vue';
 
 var router=new VueRouter({//定义路由匹配
     routes:[
@@ -26,7 +27,8 @@ var router=new VueRouter({//定义路由匹配
         {path:"/home/photodetail/:id",component:photodetail},
         {path:"/home/goodslist",component:goodslist},
         {path:'/home/goodsdetail/:id',component:goodsdetail},
-        {path:'/home/goodsdesc/:id',component:goodsdesc}
+        {path:'/home/goodsdesc/:id',component:goodsdesc},
+        {path:'/home/goodscomment/:id',component:goodscomment}
     ],
     'linkActiveClass':'mui-active'//修改路由匹配到的默认类，修改为mui的类
 });

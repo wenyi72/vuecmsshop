@@ -29,7 +29,7 @@
 			</div>
 			<div class="mui-card-footer">
 				<mt-button type="primary" class="mai">立即购买</mt-button>
-				<mt-button type="danger">加入购物车</mt-button>
+				<mt-button type="danger" @click="addGoodsToCar">加入购物车</mt-button>
 			</div>
 		</div>
         <div class="mui-card">
@@ -50,7 +50,7 @@
 		</div>
 		<div class="mui-card-footer btn">
 			<mt-button type="primary" plain size="large" class="text" @click="getGoodsDesc">图文介绍</mt-button>
-			<mt-button type="danger" plain size="large">商品评论</mt-button>
+			<mt-button type="danger" plain size="large" @click="getGoodsComment">商品评论</mt-button>
 		</div>
     </div>
 </template>
@@ -104,6 +104,14 @@ import mui from "../../lib/mui/js/mui.js";
 				},
 				getGoodsDesc(){
 					this.$router.push('/home/goodsdesc/'+this.id);
+				},
+				getGoodsComment(){
+					this.$router.push('/home/goodscomment/'+this.id);
+				},
+				addGoodsToCar(){
+					var data={
+						id:this.id
+					}
 				}
 			}
     }

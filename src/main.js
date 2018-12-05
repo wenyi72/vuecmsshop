@@ -1,5 +1,27 @@
 import Vue from 'vue';//引入Vue框架
 
+import Vuex from 'vuex';//导入vuex组件
+Vue.use(Vuex);//显示安装到vue身上去
+
+var store=new Vuex.Store({//引入我们实vuex实现组件的数据共享
+    //state共享数据
+    state:{
+        cartData:[],//这里购物车数据应该从本地获取，里面的商品对象{id,number,price,selected}
+        price:100//要获取这里的共享，需要通过this.$store.state.***
+    },
+    mutations:{//属性mutations专门用来实现修改state中的数据，这是唯一方法
+        change(state,obj){//里面所有的函数第一个数一定是state，这是固定写法
+            console.log(obj);
+            state.price=obj.newPrice+obj.new2Price;
+        }
+    },
+    getters:{//只要是vuex向外提供数据，建议getters把暴露给外的数据进行一层封装
+        getPrice(state){
+            return state.price;
+        }
+    }
+});
+
 import VueResource from 'vue-resource';//此模块用于发送ajax请求
 Vue.use(VueResource);//安装到vue的身上
 
@@ -44,5 +66,6 @@ new Vue({
     render:function(c){
     return c(app);
     },
-    router:router
+    router:router,//把路由匹配对象挂在vm实例身上
+    store//把数据共享仓库vuex挂载我们实例身上
 });
