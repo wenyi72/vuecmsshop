@@ -19,9 +19,9 @@
 					</p>
 					<div>
 						<span class="number">购买数量:</span>
-						<div class="mui-numbox" data-numbox-min='1' data-numbox-max='9'>
+						<div class="mui-numbox" data-numbox-min='1' data-numbox-max='200'>
 							<button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
-							<input id="test" class="mui-input-numbox" type="number" value="5" />
+							<input id="test" class="mui-input-numbox" type="number" ref="number" value="1" />
 							<button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
 						</div>
 					</div>
@@ -108,10 +108,14 @@ import mui from "../../lib/mui/js/mui.js";
 				getGoodsComment(){
 					this.$router.push('/home/goodscomment/'+this.id);
 				},
-				addGoodsToCar(){
+				addGoodsToCar(){//购物车
 					var data={
-						id:this.id
+						id:this.id,
+						number:this.$refs.number.value,//通过给元素设置ref属性，获取商品的购买数量
+						price:this.goodsInfo.sell_price,//商品价格
+						selected:true,
 					}
+					this.$store.commit('add',data);//把数据库存储到vuex数据共享中state.carDate中
 				}
 			}
     }

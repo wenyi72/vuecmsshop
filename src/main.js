@@ -3,21 +3,93 @@ import Vue from 'vue';//引入Vue框架
 import Vuex from 'vuex';//导入vuex组件
 Vue.use(Vuex);//显示安装到vue身上去
 
+var cartData=JSON.parse(localStorage.getItem('cartData')||'[]');//一开始就要获取从本地存储获取购物车中的商品
 var store=new Vuex.Store({//引入我们实vuex实现组件的数据共享
     //state共享数据
     state:{
-        cartData:[],//这里购物车数据应该从本地获取，里面的商品对象{id,number,price,selected}
-        price:100//要获取这里的共享，需要通过this.$store.state.***
+        cartData:cartData//这里购物车数据应该从本地获取，里面的商品对象{id,number,price,selected}
     },
     mutations:{//属性mutations专门用来实现修改state中的数据，这是唯一方法
-        change(state,obj){//里面所有的函数第一个数一定是state，这是固定写法
-            console.log(obj);
-            state.price=obj.newPrice+obj.new2Price;
+        add(state,data){
+            var flag=false;//默认没有相同的商品
+            state.cartData.forEach(function(item,index){//如果有相同商品，数量data.number个，数字最好转化为整形
+                if(item.id==data.id){
+                    //找到相同商品，数量增加data.number个，数字最好转化为整形
+                    item.number=parseInt(data.number)+parseInt(item,number);
+                    flag=true;//找到相同商品，把标识改为true
+                }
+            });
+            if(flag==false){
+                state.cartData.push(data);//上面循环没有找到相同商品，则添加一个商品
+            }
+            localStorage.setItem('cartData',JSON.stringify(state.cartData));//要把商品写入本地存储(只能存储字符串类型)
+        },
+        changeSelected(state,obj){
+            state.cartData.forEach(function(item,index){//找到对应的商品id,修改带过来的状态
+              if(item.id==obj.id){
+                item.selected=obj.selected;
+              }
+            })
+            localStorage.setItem('cartData',JSON.stringify(state.cartData));//需要同步到本地存储
+        },
+        del(state,id){//删除购物车中的商品
+            state.cartData.forEach(function(item,index){
+                if(item.id==id){//找到要删除的商品的id
+                    state.cartData.splice(index,1);//删除当前的id元素 arr.splice(索引，删除的长度)，  索引从自己开始
+                }
+                localStorage.setItem('cartData',JSON.stringify(state.cartData));//同步到本地存储
+            });
+        },
+        changeNumber(state,obj){
+            state.cartData.forEach(function(){//修改数量
+                if(item.id==obj.id){
+                    item.number=obj.number;//找到了对应的商品id，需要数量
+                }
+            });
+            localStorage.setItem('cartData',JSON.stringify(state.cartData));//需要同步到本地存储
         }
     },
     getters:{//只要是vuex向外提供数据，建议getters把暴露给外的数据进行一层封装
-        getPrice(state){
-            return state.price;
+        getTotalNumber(state){//算出商品的总数量
+            var totalNumber=0;
+            state.cartData.forEach(function(item,index){
+                totalNumber+=parseInt(item.number);
+            })
+            return totalNumber;//返回外面所需要的值
+        },
+        getGoodsIds(state){//获取购物车商品的字符串ids
+            var ids=[];
+            state.cartData.forEach(function(item,index){
+                ids.push(item.id);
+            })
+            return ids.join(',');
+        },
+        getGoodsNumber(state){//获取购物车商品id和对数量的对象{商品id:商品数量}
+            var obj={};
+            state.cartData.forEach(function(item,index){
+                obj[item.id]=item.number;
+            });
+            return obj;
+        },
+        getGoodsSelected(state){//获取商品的选中状态 {商品id:商品选中状态}
+            var obj = {};
+            state.cartData.forEach(function(item,index){
+            obj[item.id] = item.selected;
+            });
+            return obj;
+        },
+        getSelectGoodsInfo(state){//获取购物车选中商品的总数量和价格
+            var obj = {
+            selectedNumber:0,
+            selectedPrice:0
+            }
+            state.cartData.forEach(function(item,index){
+                if(item.selected == true){//判断是否选中
+                    obj['selectedNumber'] += parseInt(item.number);
+                    obj['selectedPrice'] += parseInt(item.price)*parseInt(item.number);
+                }
+            })
+            return obj;
         }
     }
 });
@@ -46,10 +118,12 @@ import {Header,Button} from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.component(Header.name,Header);
 
-import { Swipe, SwipeItem, Lazyload } from 'mint-ui';
+import { Swipe, SwipeItem, Lazyload, Switch } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
 Vue.component(Button.name, Button);
+Vue.component(Switch.name, Switch);
+
 Vue.use(Lazyload);//懒加载组件
 
 import './lib/mui/css/mui.min.css';//css组件
