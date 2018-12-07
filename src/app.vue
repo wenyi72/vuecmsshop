@@ -1,6 +1,10 @@
 <template>
     <div class="app-container">
-        <mt-header fixed title="wenyi72-app"></mt-header>
+        <mt-header fixed title="wenyi72-app">
+            <span slot="left" v-show="flag">
+                <mt-button icon="back" @click="goBack">返回</mt-button>
+            </span>
+        </mt-header>
         
         <router-view></router-view>
         
@@ -27,7 +31,27 @@
 
 <script>
     export default{
-        
+        data(){
+            return{
+                flag:false//控制返回显示和隐藏
+            }
+        },
+        methods:{
+            goBack(){
+                this.$router.go(-1);
+            }
+        },
+        watch:{//使用watch来监听路由对象
+            '$route':function(newValue,oldValue){
+                //console.log(newValue,oldValue);
+                //如果newValue.path == /home，把flag设置为false,否则为true
+                if(newValue.path=='/home'){
+                    this.flag=false;
+                }else{
+                    this.flag=true;
+                }
+            }
+        }
     }
 </script>
 

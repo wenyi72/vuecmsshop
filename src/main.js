@@ -41,7 +41,7 @@ var store=new Vuex.Store({//引入我们实vuex实现组件的数据共享
             });
         },
         changeNumber(state,obj){
-            state.cartData.forEach(function(){//修改数量
+            state.cartData.forEach(function(item,index){//修改数量
                 if(item.id==obj.id){
                     item.number=obj.number;//找到了对应的商品id，需要数量
                 }
@@ -80,8 +80,8 @@ var store=new Vuex.Store({//引入我们实vuex实现组件的数据共享
         },
         getSelectGoodsInfo(state){//获取购物车选中商品的总数量和价格
             var obj = {
-            selectedNumber:0,
-            selectedPrice:0
+                selectedNumber:0,
+                selectedPrice:0
             }
             state.cartData.forEach(function(item,index){
                 if(item.selected == true){//判断是否选中
